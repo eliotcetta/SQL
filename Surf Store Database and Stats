@@ -1,28 +1,33 @@
 --Create a store database
 
-CREATE TABLE eliot_store (id INTEGER PRIMARY KEY, item TEXT, price_in_dollars INTEGER, inventory INTEGER, aisle INTEGER);
+CREATE TABLE eliot_store (id INTEGER PRIMARY KEY, item TEXT, price_in_dollars INTEGER, inventory INTEGER, section TEXT);
 
-INSERT INTO eliot_store VALUES (1, "Surfboard", 150, 50, 4);
-INSERT INTO eliot_store VALUES (2, "5 Panel Hat", 25, 100, 2);
-INSERT INTO eliot_store VALUES (3, "Sanuks", 55, 200, 3);
-INSERT INTO eliot_store VALUES (4, "Skim Board", 120, 45, 4);
-INSERT INTO eliot_store VALUES (5, "Board Shorts", 45, 120, 2);
-INSERT INTO eliot_store VALUES (6, "Wax", 15, 200, 4);
-INSERT INTO eliot_store VALUES (7, "Button Down", 45, 250, 2);
-INSERT INTO eliot_store VALUES (8, "Shark Tooth Necklace", 25, 100, 1);
-INSERT INTO eliot_store VALUES (9, "Backpack", 55, 75, 3);
-INSERT INTO eliot_store VALUES (10, "Shoelace", 5, 250, 3);
-INSERT INTO eliot_store VALUES (11, "Watch", 35, 175, 1);
-INSERT INTO eliot_store VALUES (12, "Cooler", 75, 50, 1);
-INSERT INTO eliot_store VALUES (13, "Umbrella", 55, 100, 1);
-INSERT INTO eliot_store VALUES (14, "Towel", 20, 200, 1);
-INSERT INTO eliot_store VALUES (15, "Beach Chair", 70, 55, 1);
+INSERT INTO eliot_store VALUES (1, "Longboard Surfboard", 150.99, 10, "watersports");
+INSERT INTO eliot_store VALUES (2, "Blue 5 Panel Hat", 25.00, 45, "apparel");
+INSERT INTO eliot_store VALUES (3, "Green 5 Panel Hat", 25.00, 37, "apparel");
+INSERT INTO eliot_store VALUES (4, "Skipper Fishboard", 120.00, 13, "watersports");
+INSERT INTO eliot_store VALUES (5, "Shortboard Surfboard", 145.00, 12, "watersports");
+INSERT INTO eliot_store VALUES (6, "Premium Surf Wax", 15.99, 55, "watersports");
+INSERT INTO eliot_store VALUES (7, "Hemp Surf Wax", 17.99, 41, "watersports");
+INSERT INTO eliot_store VALUES (8, "Shark Tooth Necklace", 25.00, 56, "accessories");
+INSERT INTO eliot_store VALUES (9, "Black Canvas Backpack", 55.00, 39, "utility");
+INSERT INTO eliot_store VALUES (10, "Funboard Surfboard", 155.00, 18, "watersports");
+INSERT INTO eliot_store VALUES (11, "Waterproof Wrist Watch", 35.00, 34, "accessories");
+INSERT INTO eliot_store VALUES (12, "Igloo Cooler", 75.00, 52, "utility");
+INSERT INTO eliot_store VALUES (13, "Rainbow Parasol Umbrella", 55.00, 68, "outdoor);
+INSERT INTO eliot_store VALUES (14, "Quick-Dry Beach Towel", 15.99, 170, "outdoor");
+INSERT INTO eliot_store VALUES (15, "Backpack Style Beach Chair", 55.00, 45, "outdoor");
 
 --display the aggregate inventory.
 SELECT SUM(inventory) FROM eliot_store;
 
---display items with an inventory of 101 or more ordered by aisle.
-SELECT * FROM eliot_store WHERE inventory > 100 ORDER BY aisle;
+--display items with an inventory of 101 or more ordered by section.
+SELECT * FROM eliot_store WHERE inventory > 100 ORDER BY section;
+
+--display the avg price of surfboards in store? 
+SELECT AVG(price_in_dollars) "avg surfboard price"
+FROM eliot_store
+where section='watersports'; 
 
 --display the items with an inventory below 50.
 SELECT * FROM eliot_store WHERE inventory < 50;
