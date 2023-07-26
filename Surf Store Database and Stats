@@ -14,7 +14,7 @@ INSERT INTO eliot_store VALUES (9, "Black Canvas Backpack", 55.00, 39, "utility"
 INSERT INTO eliot_store VALUES (10, "Funboard Surfboard", 155.00, 18, "watersports");
 INSERT INTO eliot_store VALUES (11, "Waterproof Wrist Watch", 35.00, 34, "accessories");
 INSERT INTO eliot_store VALUES (12, "Igloo Cooler", 75.00, 52, "utility");
-INSERT INTO eliot_store VALUES (13, "Rainbow Parasol Umbrella", 55.00, 68, "outdoor);
+INSERT INTO eliot_store VALUES (13, "Rainbow Parasol Umbrella", 55.00, 68, "outdoor");
 INSERT INTO eliot_store VALUES (14, "Quick-Dry Beach Towel", 15.99, 170, "outdoor");
 INSERT INTO eliot_store VALUES (15, "Backpack Style Beach Chair", 55.00, 45, "outdoor");
 
