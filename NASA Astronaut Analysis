@@ -405,7 +405,7 @@ SELECT Gender, Name, MAX(Space_Walks_hr) AS "Total #of Space Walk Hours", Missio
 #Which astronaut has logged the most space flight hours? 
 SELECT Name, Birth_date AS "Birth Date", MAX(Space_Flight_hr) AS "Highest #of Space Flight Hours", Missions FROM astronauts;
 
-#Which decade had the most astronauts? Which decade saw the most space flight or walk hours?
+#Which decade had the most astronauts? Which decade saw the most space flight hours or space walk hours?
 SELECT
     CASE
         WHEN Year < 1960 THEN "1950's"
@@ -427,21 +427,21 @@ SELECT Year, COUNT(*) AS "Total Number of Female Astronauts" FROM astronauts WHE
 #Which astronauts have completed more than 5 space flights?
 SELECT Name, SUM(Space_Flights) AS "Number of Space Flights", Missions FROM astronauts GROUP BY Name HAVING "Number of Space Flights" > 5;
 
-#Which undergraduate majors have logged the most space flight hours and walks?
+#Which undergraduate majors have logged the most space flight hours and space walks?
 SELECT Undergraduate_Major AS "Undergraduate Major", SUM(Space_Flight_hr) AS "Total Space Flight Hours", SUM(Space_Walks) AS "Total Number of Space Walks" FROM astronauts GROUP BY Undergraduate_Major HAVING SUM(Space_Flight_hr) > 30000 AND SUM(Space_Walks) > 20;
 
-#Which military ranks have logged the most space flight hours and walks?
+#Which military ranks have logged the most space flight hours and space walks?
 SELECT Military_Rank AS "Military Rank", SUM(Space_Flight_hr) AS "Total Space Flight Hours", SUM(Space_Walks) AS "Total Number of Space Walks" FROM astronauts WHERE Military_Rank IS NOT NULL GROUP BY Military_Rank HAVING SUM(Space_Flight_hr) > 30000 AND SUM(Space_Walks) > 20;
 
 #Which colleges have produced the most NASA astronauts?
 SELECT Alma_Mater AS "Alma Mater", COUNT(*) AS "Total #of NASA Astronaut Graduates" FROM astronauts GROUP BY Alma_Mater HAVING COUNT(*) > 4;
 
-#Which college has produced the most female NASA astronauts?
+#Which college(s) has produced the most female NASA astronauts?
 SELECT COUNT(*) AS "Total #of Female NASA Astronaut Graduates", Alma_Mater AS "Alma Mater" FROM astronauts WHERE Gender ='Female' GROUP BY Alma_Mater HAVING COUNT(*) > 1;
 
-#Which astronauts have died on missions?
+#Which astronauts died on missions?
 SELECT Name, Death_Mission AS "Death Mission", Birth_Date AS "Birth Date", Death_Date AS "Death Date" FROM astronauts WHERE Death_Mission IS NOT NULL GROUP BY Name;
 
-#How many deceased astronauts have stepped foot in space?
+#How many deceased astronauts stepped foot in space?
 SELECT Name, Death_Date AS "Death Date", Space_Walks AS "Space Walks" FROM astronauts WHERE Death_Date IS NOT NULL AND Space_Walks > 0 GROUP BY Name;
     
