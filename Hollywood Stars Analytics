@@ -1,0 +1,452 @@
+#This analysis of twenty randomly generated Hollywood stars utilized the following data set I compiled.
+
+CREATE TABLE hollywood_stars (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullname TEXT,
+    birth_year INTEGER,
+    credits INTEGER,
+    wins INTEGER,
+    nominations INTEGER);
+    
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Maggie Gyllenhaal", 1977, 55, 43, 94);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Peter Sarsgaard", 1971, 76, 14, 38);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Paul Thomas Anderson", 1970, 83, 95, 273);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Maya Rudolph", 1972, 130, 23, 56);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Harrison Ford", 1942, 91, 45, 47);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Olivia Colman", 1974, 131, 99, 167);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Daniel Kaluuya", 1989, 59, 47, 93);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Jesse Plemons", 1988, 67, 5, 41);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Keke Palmer", 1993, 123, 17, 54);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Pam Grier", 1949, 113, 8, 24);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Robert De Niro", 1943, 175, 67, 138);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Samuel L. Jackson", 1948, 221, 48, 95);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Jordan Peele", 1979, 40, 107, 149);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Barry Jenkins", 1979, 43, 103, 152);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Don Cheadle", 1964, 125, 38, 118);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Kirsten Dunst", 1982, 93, 51, 122);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Joaquin Phoenix", 1974, 76, 70, 188);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Reese Witherspoon", 1976, 112, 57, 123);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Matt Damon", 1970, 133, 37, 154);
+INSERT INTO hollywood_stars (fullname, birth_year, credits, wins, nominations) VALUES ("Drew Barrymore", 1975, 115, 36, 63);
+
+CREATE TABLE partners (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    person_id INTEGER,
+    name TEXT,
+    partner_id INTEGER);
+    
+INSERT INTO partners (person_id, name, partner_id) VALUES (1, "Peter Sarsgaard", 2);
+INSERT INTO partners (person_id, name, partner_id) VALUES (2, "Maggie Gyllenhaal", 1);
+INSERT INTO partners (person_id, name, partner_id) VALUES (3, "Maya Rudolph", 4);
+INSERT INTO partners (person_id, name, partner_id) VALUES (4, "Paul Thomas Anderson", 3);
+INSERT INTO partners (person_id, name, partner_id) VALUES (5, "Calista Flockhart", NULL);
+INSERT INTO partners (person_id, name, partner_id) VALUES (6, "Ed Sinclair", NULL);
+INSERT INTO partners (person_id, name, partner_id) VALUES (7, "Amandla Chrichlow", NULL);
+INSERT INTO partners (person_id, name, partner_id) VALUES (8, "Kirsten Dunst", 16);
+INSERT INTO partners (person_id, name, partner_id) VALUES (9, NULL, NULL);
+INSERT INTO partners (person_id, name, partner_id) VALUES (10, NULL, NULL);
+INSERT INTO partners (person_id, name, partner_id) VALUES (11, "Tiffany Chen", NULL);
+INSERT INTO partners (person_id, name, partner_id) VALUES (12, "LaTanya Richardson Jackson", NULL);
+INSERT INTO partners (person_id, name, partner_id) VALUES (13, "Chelsea Peretti", NULL);
+INSERT INTO partners (person_id, name, partner_id) VALUES (14, "Lulu Wang", NULL);
+INSERT INTO partners (person_id, name, partner_id) VALUES (15, "Brigid Coulter", NULL);
+INSERT INTO partners (person_id, name, partner_id) VALUES (16, "Jesse Plemons", 8);
+INSERT INTO partners (person_id, name, partner_id) VALUES (17, "Rooney Mara", NULL);
+INSERT INTO partners (person_id, name, partner_id) VALUES (18, NULL, NULL);
+INSERT INTO partners (person_id, name, partner_id) VALUES (19, "Luciana Barroso", NULL);
+INSERT INTO partners (person_id, name, partner_id) VALUES (20, NULL, NULL);
+
+CREATE TABLE industry_role (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    person_id INTEGER,
+    name TEXT);
+    
+INSERT INTO industry_role (person_id, name) VALUES (1, "Actress");
+INSERT INTO industry_role (person_id, name) VALUES (1, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (1, "Director");
+INSERT INTO industry_role (person_id, name) VALUES (2, "Actor");
+INSERT INTO industry_role (person_id, name) VALUES (2, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (3, "Director");
+INSERT INTO industry_role (person_id, name) VALUES (3, "Writer");
+INSERT INTO industry_role (person_id, name) VALUES (3, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (4, "Actress");
+INSERT INTO industry_role (person_id, name) VALUES (4, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (4, "Writer");
+INSERT INTO industry_role (person_id, name) VALUES (5, "Actor");
+INSERT INTO industry_role (person_id, name) VALUES (5, "Writer");
+INSERT INTO industry_role (person_id, name) VALUES (5, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (6, "Actress");
+INSERT INTO industry_role (person_id, name) VALUES (6, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (6, "Writer");
+INSERT INTO industry_role (person_id, name) VALUES (7, "Actor");
+INSERT INTO industry_role (person_id, name) VALUES (7, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (7, "Writer");
+INSERT INTO industry_role (person_id, name) VALUES (8, "Actor");
+INSERT INTO industry_role (person_id, name) VALUES (8, "Music");
+INSERT INTO industry_role (person_id, name) VALUES (8, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (9, "Actress");
+INSERT INTO industry_role (person_id, name) VALUES (9, "Music");
+INSERT INTO industry_role (person_id, name) VALUES (9, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (10, "Actress");
+INSERT INTO industry_role (person_id, name) VALUES (10, "Writer");
+INSERT INTO industry_role (person_id, name) VALUES (10, "Music");
+INSERT INTO industry_role (person_id, name) VALUES (11, "Actor");
+INSERT INTO industry_role (person_id, name) VALUES (11, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (11, "Director");
+INSERT INTO industry_role (person_id, name) VALUES (12, "Actor");
+INSERT INTO industry_role (person_id, name) VALUES (12, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (12, "Crew");
+INSERT INTO industry_role (person_id, name) VALUES (13, "Director");
+INSERT INTO industry_role (person_id, name) VALUES (13, "Writer");
+INSERT INTO industry_role (person_id, name) VALUES (13, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (14, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (14, "Director");
+INSERT INTO industry_role (person_id, name) VALUES (14, "Writer");
+INSERT INTO industry_role (person_id, name) VALUES (15, "Actor");
+INSERT INTO industry_role (person_id, name) VALUES (15, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (15, "Director");
+INSERT INTO industry_role (person_id, name) VALUES (16, "Actress");
+INSERT INTO industry_role (person_id, name) VALUES (16, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (16, "Director");
+INSERT INTO industry_role (person_id, name) VALUES (17, "Actor");
+INSERT INTO industry_role (person_id, name) VALUES (17, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (17, "Director");
+INSERT INTO industry_role (person_id, name) VALUES (18, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (18, "Actress");
+INSERT INTO industry_role (person_id, name) VALUES (19, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (19, "Actor");
+INSERT INTO industry_role (person_id, name) VALUES (19, "Writer");
+INSERT INTO industry_role (person_id, name) VALUES (20, "Producer");
+INSERT INTO industry_role (person_id, name) VALUES (20, "Actress");
+INSERT INTO partners (person_id, name) VALUES (20, "Director");
+
+
+CREATE TABLE co_project (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT);
+    
+INSERT INTO co_project (name) VALUES ("50 First Dates");
+INSERT INTO co_project (name) VALUES ("A Prairie Home Companion");
+INSERT INTO co_project (name) VALUES ("Anchorman 2: The Legend Continues");
+INSERT INTO co_project (name) VALUES ("Animal");
+INSERT INTO co_project (name) VALUES ("Avengers: Age of Ultron");
+INSERT INTO co_project (name) VALUES ("Avengers: Endgame");
+INSERT INTO co_project (name) VALUES ("Avengers: Infinity War");
+INSERT INTO co_project (name) VALUES ("Away We Go");
+INSERT INTO co_project (name) VALUES ("Big Mouth");
+INSERT INTO co_project (name) VALUES ("Black Mass");
+INSERT INTO co_project (name) VALUES ("Black Mirror");
+INSERT INTO co_project (name) VALUES ("Boogie Nights");
+INSERT INTO co_project (name) VALUES ("Captain Marvel");
+INSERT INTO co_project (name) VALUES ("Cleaner");
+INSERT INTO co_project (name) VALUES ("Confessions of a Dangerous Mind");
+INSERT INTO co_project (name) VALUES ("Donnie Darko");
+INSERT INTO co_project (name) VALUES ("Drunk History");
+INSERT INTO co_project (name) VALUES ("Duplex");
+INSERT INTO co_project (name) VALUES ("Everybody's Fine");
+INSERT INTO co_project (name) VALUES ("Fargo");
+INSERT INTO co_project (name) VALUES ("Father of the Bride Part 3 (ish)");
+INSERT INTO co_project (name) VALUES ("Get Out");
+INSERT INTO co_project (name) VALUES ("Goodfellas");
+INSERT INTO co_project (name) VALUES ("Grey's Anatomy");
+INSERT INTO co_project (name) VALUES ("Hard Eight");
+INSERT INTO co_project (name) VALUES ("Honk for Jesus. Save Your Soul.");
+INSERT INTO co_project (name) VALUES ("Hotel Rwanda");
+INSERT INTO co_project (name) VALUES ("Human Resources");
+INSERT INTO co_project (name) VALUES ("Inherent Vice");
+INSERT INTO co_project (name) VALUES ("Iron Man 2");
+INSERT INTO co_project (name) VALUES ("Jackie Brown");
+INSERT INTO co_project (name) VALUES ("Joker");
+INSERT INTO co_project (name) VALUES ("Judas and the Black Messiah");
+INSERT INTO co_project (name) VALUES ("K-19: The Widowmaker");
+INSERT INTO co_project (name) VALUES ("Key and Peele");
+INSERT INTO co_project (name) VALUES ("Killers of the Flower Moon");
+INSERT INTO co_project (name) VALUES ("Licorice Pizza");
+INSERT INTO co_project (name) VALUES ("Little Fockers");
+INSERT INTO co_project (name) VALUES ("Mad TV");
+INSERT INTO co_project (name) VALUES ("Mona Lisa Smile");
+INSERT INTO co_project (name) VALUES ("No Sudden Move");
+INSERT INTO co_project (name) VALUES ("Nope");
+INSERT INTO co_project (name) VALUES ("Ocean's Eleven");
+INSERT INTO co_project (name) VALUES ("Ocean's Thirteen");
+INSERT INTO co_project (name) VALUES ("Ocean's Twelve");
+INSERT INTO co_project (name) VALUES ("Out of Sight");
+INSERT INTO co_project (name) VALUES ("Patriot Games");
+INSERT INTO co_project (name) VALUES ("Rendition");
+INSERT INTO co_project (name) VALUES ("Riding in Cars with Boys");
+INSERT INTO co_project (name) VALUES ("Secret Invasion");
+INSERT INTO co_project (name) VALUES ("Shrink");
+INSERT INTO co_project (name) VALUES ("Star Wars: Episode IX - The Rise of Skywalker");
+INSERT INTO co_project (name) VALUES ("The Good Shepherd");
+INSERT INTO co_project (name) VALUES ("The Irishman");
+INSERT INTO co_project (name) VALUES ("The Lost Daughter");
+INSERT INTO co_project (name) VALUES ("The Man Who Saved the World");
+INSERT INTO co_project (name) VALUES ("The Master");
+INSERT INTO co_project (name) VALUES ("The Mitchells vs the Machines");
+INSERT INTO co_project (name) VALUES ("The Power of the Dog");
+INSERT INTO co_project (name) VALUES ("They've Gotta Have Us");
+INSERT INTO co_project (name) VALUES ("Titan A.E.");
+INSERT INTO co_project (name) VALUES ("Turbo");
+INSERT INTO co_project (name) VALUES ("Wag the Dog");
+INSERT INTO co_project (name) VALUES ("Walk the Line");
+INSERT INTO co_project (name) VALUES ("Watership Down");
+
+CREATE TABLE project (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    person_id INTEGER,
+    project TEXT,
+    project_type TEXT,
+    project_id INTEGER);
+    
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (1, "Donnie Darko", "Film", 16);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (1, "Away We Go", "Film", 8);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (1, "The Lost Daughter", "Film", 55);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (1, "Mona Lisa Smile", "Film", 40);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (1, "Confessions of a Dangerous Mind", "Film", 15);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (1, "Riding in Cars with Boys", "Film", 49);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (2, "The Lost Daughter", "Film", 55);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (2, "K-19: The Widowmaker", "Film", 34);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (2, "Rendition", "Film", 48);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (2, "Black Mass", "Film", 10);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (3, "Inherent Vice", "Film", 29);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (3, "Licorice Pizza", "Film", 37);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (3, "The Master", "Film", 57);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (3, "Hard Eight", "Film", 25);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (3, "Boogie Nights", "Film", 12);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (3, "A Prairie Home Companion", "Film", 2);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (4, "50 First Dates", "Film", 1);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (4, "Away We Go", "Film", 8);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (4, "Inherent Vice", "Film", 29);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (4, "Licorice Pizza", "Film", 37);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (4, "Drunk History", "Series", 17);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (4, "Big Mouth", "Series", 9);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (4, "A Prairie Home Companion", "Film", 2);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (4, "The Mitchells vs the Machines", "Film", 58);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (4, "Human Resources", "Series", 28);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (4, "Turbo", "Film", 62);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (4, "Duplex", "Film", 18);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (5, "K-19: The Widowmaker", "Film", 34);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (5, "Patriot Games", "Film", 47);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (5, "Star Wars: Episode IX - The Rise of Skywalker", "Film", 52);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (5, "Anchorman 2: The Legend Continues", "Film", 3);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (6, "The Lost Daughter", "Film", 55);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (6, "Watership Down", "Series", 65);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (6, "The Mitchells vs the Machines", "Film", 58);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (6, "Secret Invasion", "Series", 50);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (7, "Get Out", "Film", 22);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (7, "Nope", "Film", 42);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (7, "Judas and the Black Messiah", "Film", 33);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (7, "Black Mirror", "Series", 11);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (7, "Watership Down", "Series", 65);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (7, "Honk for Jesus. Save Your Soul.", "Film", 26);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (8, "The Master", "Film", 57);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (8, "Judas and the Black Messiah", "Film", 33);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (8, "Black Mirror", "Series", 11);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (8, "The Power of the Dog", "Film", 59);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (8, "The Irishman", "Film", 54);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (8, "Drunk History", "Series", 17);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (8, "Fargo", "Series", 20);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (8, "Black Mass", "Film", 10);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (8, "Grey's Anatomy", "Series", 24);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (8, "Shrink", "Film", 51);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (8, "Killers of the Flower Moon", "Film", 36);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (9, "Nope", "Film", 42);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (9, "Grey's Anatomy", "Series", 24);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (9, "Cleaner", "Film", 14);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (9, "Key and Peele", "Series", 35);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (9, "Big Mouth", "Series", 9);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (9, "Human Resources", "Series", 28);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (9, "Shrink", "Film", 51);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (9, "Animal", "Film", 4);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (10, "Jackie Brown", "Film", 31);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (11, "The Irishman", "Film", 54);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (11, "Jackie Brown", "Film", 31);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (11, "Joker", "Film", 32);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (11, "The Good Shepherd", "Film", 53);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (11, "Goodfellas", "Film", 23);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (11, "Wag the Dog", "Film", 63);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (11, "Everybody's Fine", "Film", 19);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (11, "Killers of the Flower Moon", "Film", 36);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (11, "Little Fockers", "Film", 38);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (11, "Father of the Bride Part 3 (ish)", "Film", 21);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (11, "The Man Who Saved the World", "Film", 56);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (12, "Patriot Games", "Film", 47);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (12, "Star Wars: Episode IX - The Rise of Skywalker", "Film", 52);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (12, "Jackie Brown", "Film", 31);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (12, "Cleaner", "Film", 14);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (12, "Goodfellas", "Film", 23);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (12, "Hard Eight", "Film", 25);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (12, "Turbo", "Film", 62);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (12, "Secret Invasion", "Series", 50);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (12, "Avengers: Endgame", "Film", 6);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (12, "Captain Marvel", "Film", 13);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (12, "Avengers: Age of Ultron", "Film", 5);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (12, "Iron Man 2", "Film", 30);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (12, "Out of Sight", "Film", 46);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (13, "Get Out", "Film", 22);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (13, "Nope", "Film", 42);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (13, "Mad TV", "Series", 39);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (13, "Drunk History", "Series", 17);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (13, "Fargo", "Series", 20);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (13, "Key and Peele", "Series", 35);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (13, "Big Mouth", "Series", 9);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (13, "Honk for Jesus. Save Your Soul.", "Film", 26);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (13, "Little Fockers", "Film", 38);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (14, "They've Gotta Have Us", "Film", 60);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "Boogie Nights", "Film", 12);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "Secret Invasion", "Series", 50);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "Avengers: Endgame", "Film", 6);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "Avengers: Infinity War", "Film", 7);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "Captain Marvel", "Film", 13);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "Avengers: Age of Ultron", "Film", 5);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "Iron Man 2", "Film", 30);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "Out of Sight", "Film", 46);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "Mad TV", "Series", 39);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "They've Gotta Have Us", "Film", 60);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "Hotel Rwanda", "Film", 27);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "No Sudden Move", "Film", 41);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "Ocean's Eleven", "Film", 43);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "Ocean's Twelve", "Film", 45);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (15, "Ocean's Thirteen", "Film", 44);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (16, "Black Mirror", "Series", 11);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (16, "The Power of the Dog", "Film", 59);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (16, "Drunk History", "Series", 17);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (16, "Fargo", "Series", 20);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (16, "Wag the Dog", "Film", 63);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (16, "Mona Lisa Smile", "Film", 40);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (16, "Anchorman 2: The Legend Continues", "Film", 3);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (17, "Inherent Vice", "Film", 29);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (17, "The Master", "Film", 57);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (17, "Joker", "Film", 32);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (17, "Hotel Rwanda", "Film", 27);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (17, "Walk the Line", "Film", 64);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (18, "Rendition", "Film", 48);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (18, "Inherent Vice", "Film", 29);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (18, "Father of the Bride Part 3 (ish)", "Film", 21);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (18, "Walk the Line", "Film", 64);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (19, "The Good Shepherd", "Film", 53);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (19, "Confessions of a Dangerous Mind", "Film", 15);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (19, "The Man Who Saved the World", "Film", 56);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (19, "No Sudden Move", "Film", 41);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (19, "Ocean's Eleven", "Film", 43);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (19, "Ocean's Twelve", "Film", 45);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (19, "Ocean's Thirteen", "Film", 44);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (19, "Titan A.E.", "Film", 61);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (20, "Donnie Darko", "Film", 16);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (20, "50 First Dates", "Film", 1);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (20, "Everybody's Fine", "Film", 19);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (20, "Confessions of a Dangerous Mind", "Film", 15);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (20, "Riding in Cars with Boys", "Film", 49);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (20, "Duplex", "Film", 18);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (20, "Animal", "Film", 4);
+INSERT INTO project (person_id, project, project_type, project_id) VALUES (20, "Titan A.E.", "Film", 61);
+
+SELECT h.fullname AS Star, h.birth_year AS "Birth Year", h.credits AS "IMDB Credits", h.wins AS Wins, h.nominations AS Nominations FROM hollywood_stars AS h ORDER BY h.fullname;
+
+/* Are any of the listed Hollywood stars married? */
+
+SELECT DISTINCT h.fullname AS "Spouse 1", p.name AS "Spouse 2"
+    FROM hollywood_stars AS h
+    LEFT OUTER JOIN partners AS p 
+    ON h.id = p.person_id
+    WHERE h.id < p.partner_id;
+    
+/* Have any of the listed Hollywood stars worked on the same project? */
+
+SELECT cp.name AS "Common Project", GROUP_CONCAT(hs.fullname) AS Stars
+    FROM co_project cp
+    JOIN project p 
+    ON cp.id = p.project_id
+    JOIN hollywood_stars hs 
+    ON p.person_id = hs.id
+GROUP BY cp.name ORDER BY cp.name;
+
+/* Which stars have worked on the most projects together? */
+
+SELECT DISTINCT
+    hs1.fullname AS "Star 1", hs2.fullname AS "Star 2",
+    COUNT(*) AS "Shared Projects"
+FROM
+    project AS p1
+JOIN
+    hollywood_stars AS hs1 ON p1.person_id = hs1.id
+JOIN
+    project AS p2 ON p1.project_id = p2.project_id
+JOIN
+    hollywood_stars AS hs2 ON p2.person_id = hs2.id
+WHERE hs1.fullname < hs2.fullname
+GROUP BY
+    hs1.fullname, hs2.fullname
+ORDER BY
+    COUNT(*) DESC LIMIT 7;
+    
+/* What roles do these stars perform in the entertainment industry? */
+    
+SELECT h.fullname AS Star, GROUP_CONCAT(
+    DISTINCT CASE 
+        WHEN industry_role.name IN ('Actor', 'Actress') THEN 'Acting' 
+        WHEN industry_role.name IN ('Producer') THEN 'Producing'
+        WHEN industry_role.name IN ('Director') THEN 'Directing'
+        WHEN industry_role.name IN ('Writer') THEN 'Writing'
+        WHEN industry_role.name IN ('Music') THEN 'Music Dept'
+        ELSE 'Misc Crew' 
+    END) AS "Industry Roles Performed"
+    FROM industry_role
+    JOIN hollywood_stars AS h
+    ON industry_role.person_id = h.id
+    GROUP BY h.fullname;
+
+
+/* Which decades were these stars born in? */
+
+SELECT 
+    CASE
+        WHEN hollywood_stars.birth_year < 1960 THEN "1950's"
+        WHEN hollywood_stars.birth_year < 1970 THEN "1960's"
+        WHEN hollywood_stars.birth_year < 1980 THEN "1970's"
+        WHEN hollywood_stars.birth_year < 1990 THEN "1980's"
+        WHEN hollywood_stars.birth_year < 2000 THEN "1990's"
+        WHEN hollywood_stars.birth_year < 2010 THEN "2000's"
+        WHEN hollywood_stars.birth_year IS NULL THEN "N/A"
+        ELSE "Error"
+    END as "Birth Decade",GROUP_CONCAT(DISTINCT hollywood_stars.fullname) AS Stars
+    FROM hollywood_stars
+    GROUP BY "Birth Decade";
+
+/* Break down the average number of wins and nominations per star and per industry role for each decade of stars. */
+    
+ SELECT 
+    CASE
+        WHEN hollywood_stars.birth_year < 1960 THEN "1950's"
+        WHEN hollywood_stars.birth_year < 1970 THEN "1960's"
+        WHEN hollywood_stars.birth_year < 1980 THEN "1970's"
+        WHEN hollywood_stars.birth_year < 1990 THEN "1980's"
+        WHEN hollywood_stars.birth_year < 2000 THEN "1990's"
+        WHEN hollywood_stars.birth_year < 2010 THEN "2000's"
+        WHEN hollywood_stars.birth_year IS NULL THEN "N/A"
+        ELSE "Error"
+    END as "Birth Decade",
+    CAST(SUM(hollywood_stars.wins) AS DECIMAL) / COUNT(DISTINCT hollywood_stars.fullname) AS "Avg Wins per Star",
+    CAST(SUM(hollywood_stars.nominations) AS DECIMAL) / COUNT(DISTINCT hollywood_stars.fullname) AS "Avg Noms per Star",
+    CAST(SUM(hollywood_stars.wins) AS DECIMAL) / COUNT (DISTINCT industry_role.name) AS "Avg Wins per Industry Role",
+    CAST(SUM(hollywood_stars.nominations) AS DECIMAL) / COUNT (DISTINCT industry_role.name) AS "Avg Noms per Industry Role"
+    FROM hollywood_stars
+    JOIN industry_role
+    ON hollywood_stars.id = industry_role.person_id
+    GROUP BY "Birth Decade";
+    
+/* Break down the total number of wins and nominations for the male and female stars. */
+
+SELECT 
+    CASE
+        WHEN industry_role.name = 'Actor' THEN 'Men'
+        WHEN industry_role.name = 'Actress' THEN 'Women'
+        ELSE NULL
+    END as "Gender",
+    SUM(hollywood_stars.wins) AS total_wins, SUM(hollywood_stars.nominations) AS total_nominations
+    FROM industry_role
+    JOIN hollywood_stars
+    ON hollywood_stars.id = industry_role.person_id
+    GROUP BY "Gender"
+    HAVING "Gender" IS NOT NULL;
+    
