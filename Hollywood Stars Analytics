@@ -341,11 +341,18 @@ INSERT INTO project (person_id, project, project_type, project_id) VALUES (20, "
 INSERT INTO project (person_id, project, project_type, project_id) VALUES (20, "Animal", "Film", 4);
 INSERT INTO project (person_id, project, project_type, project_id) VALUES (20, "Titan A.E.", "Film", 61);
 
-SELECT h.fullname AS Star, h.birth_year AS "Birth Year", h.credits AS "IMDB Credits", h.wins AS Wins, h.nominations AS Nominations FROM hollywood_stars AS h ORDER BY h.fullname;
+SELECT h.fullname AS Star, 
+h.birth_year AS "Birth Year", 
+h.credits AS "IMDB Credits", 
+h.wins AS Wins, 
+h.nominations AS Nominations 
+FROM hollywood_stars AS h 
+ORDER BY h.fullname;
 
 /* Are any of the listed Hollywood stars married? */
 
-SELECT DISTINCT h.fullname AS "Spouse 1", p.name AS "Spouse 2"
+SELECT DISTINCT h.fullname AS "Spouse 1", 
+p.name AS "Spouse 2"
     FROM hollywood_stars AS h
     LEFT OUTER JOIN partners AS p 
     ON h.id = p.person_id
@@ -353,7 +360,8 @@ SELECT DISTINCT h.fullname AS "Spouse 1", p.name AS "Spouse 2"
     
 /* Have any of the listed Hollywood stars worked on the same project? */
 
-SELECT cp.name AS "Common Project", GROUP_CONCAT(hs.fullname) AS Stars
+SELECT cp.name AS "Common Project", 
+GROUP_CONCAT(hs.fullname) AS Stars
     FROM co_project cp
     JOIN project p 
     ON cp.id = p.project_id
@@ -364,7 +372,8 @@ GROUP BY cp.name ORDER BY cp.name;
 /* Which stars have worked on the most projects together? */
 
 SELECT DISTINCT
-    hs1.fullname AS "Star 1", hs2.fullname AS "Star 2",
+    hs1.fullname AS "Star 1", 
+    hs2.fullname AS "Star 2",
     COUNT(*) AS "Shared Projects"
 FROM
     project AS p1
@@ -382,7 +391,8 @@ ORDER BY
     
 /* What roles do these stars perform in the entertainment industry? */
     
-SELECT h.fullname AS Star, GROUP_CONCAT(
+SELECT h.fullname AS Star, 
+GROUP_CONCAT(
     DISTINCT CASE 
         WHEN industry_role.name IN ('Actor', 'Actress') THEN 'Acting' 
         WHEN industry_role.name IN ('Producer') THEN 'Producing'
@@ -409,7 +419,8 @@ SELECT
         WHEN hollywood_stars.birth_year < 2010 THEN "2000's"
         WHEN hollywood_stars.birth_year IS NULL THEN "N/A"
         ELSE "Error"
-    END as "Birth Decade",GROUP_CONCAT(DISTINCT hollywood_stars.fullname) AS Stars
+    END as "Birth Decade",
+GROUP_CONCAT(DISTINCT hollywood_stars.fullname) AS Stars
     FROM hollywood_stars
     GROUP BY "Birth Decade";
 
@@ -443,7 +454,8 @@ SELECT
         WHEN industry_role.name = 'Actress' THEN 'Women'
         ELSE NULL
     END as "Gender",
-    SUM(hollywood_stars.wins) AS total_wins, SUM(hollywood_stars.nominations) AS total_nominations
+    SUM(hollywood_stars.wins) AS total_wins, 
+    SUM(hollywood_stars.nominations) AS total_nominations
     FROM industry_role
     JOIN hollywood_stars
     ON hollywood_stars.id = industry_role.person_id
