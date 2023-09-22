@@ -1,7 +1,7 @@
-#This analysis utilized the following NASA dataset:
+/* This analysis utilized the following NASA dataset */
 
-#Source:
-  https://www.kaggle.com/nasa/astronaut-yearbook
+/* Source:
+  https://www.kaggle.com/nasa/astronaut-yearbook */
 
 CREATE TABLE astronauts(
    Name                TEXT PRIMARY KEY,
@@ -385,27 +385,56 @@ VALUES
   ('John W. Young',1962,2,'Retired','9/24/1930','San Francisco, CA','Male','Georgia Institute of Technology','Aeronautical Engineering',NULL,'Captain','US Navy (Retired)',6,835,3,20,'Gemini 3, Gemini 10, Apollo 10, Apollo 16, STS-1 (Columbia), STS-9 (Columbia)',NULL,NULL);
   ('George D. Zamka',1998,17,'Retired','6/29/1962','Jersey City, NJ','Male','US Naval Academy; Florida Institute of Technology','Mathematics','Engineering Management','Colonel','US Marine Corps (Retired)',2,692,0,0,'STS-120 (Discovery), STS-130 (Endeavor)',NULL,NULL);
 
-#Analysis:
+/* Analysis */
 
-#How many datasets does this table contain?
-SELECT COUNT(Name) AS "Total Quantity of Datasets" FROM astronauts;
+/* How many datasets does this table contain? */
 
-#How many NASA astronauts are currently in management roles, active, deceased, and retired?  
-SELECT Status, COUNT(Name) AS "Astronauts" FROM astronauts GROUP BY Status ORDER BY COUNT(Status) ASC;
+SELECT COUNT(Name) AS "Total Quantity of Datasets" 
+FROM astronauts;
 
-#How many active duty astronauts are female or male? What is the average amount of space walk hours for either gender?  
-SELECT Gender, COUNT(Gender) AS "Total #of Active Duty NASA Astronauts", ROUND(AVG(Space_Flight_hr)) AS "Average #of Space Flight Hours", SUM(Space_FLight_hr) AS "Total #of Space Flight Hours" FROM astronauts WHERE Status ="Active" GROUP BY Gender; 
+/* How many NASA astronauts are currently in management roles, active, deceased, and retired? */
 
-#How many total astronauts are female or male? What is the average amount and sum of all space flight hours for either gender?  
-SELECT Gender, COUNT(Gender) AS "Total #NASA Astronauts", ROUND(AVG(Space_Flight_hr)) AS "Average #of Space Flight Hours", SUM(Space_Flight_hr) AS "Total #of Space Flight Hours" FROM astronauts GROUP BY Gender;
+SELECT Status, COUNT(Name) AS "Astronauts" 
+FROM astronauts 
+GROUP BY Status 
+ORDER BY COUNT(Status) ASC;
 
-#Which female astronaut has logged the highest amount of space walk hours? Which male astronaut? 
-SELECT Gender, Name, MAX(Space_Walks_hr) AS "Total #of Space Walk Hours", Missions FROM astronauts GROUP BY Gender;
+/* How many active duty astronauts are female or male? What is the average amount of space walk hours for either gender? */
 
-#Which astronaut has logged the most space flight hours? 
-SELECT Name, Birth_date AS "Birth Date", MAX(Space_Flight_hr) AS "Highest #of Space Flight Hours", Missions FROM astronauts;
+SELECT Gender, 
+COUNT(Gender) AS "Total #of Active Duty NASA Astronauts", 
+ROUND(AVG(Space_Flight_hr)) AS "Average #of Space Flight Hours", 
+SUM(Space_FLight_hr) AS "Total #of Space Flight Hours" 
+FROM astronauts WHERE Status ="Active" 
+GROUP BY Gender; 
 
-#Which decade had the most astronauts? Which decade saw the most space flight hours or space walk hours?
+/* How many total astronauts are female or male? What is the average amount and sum of all space flight hours for either gender? */
+
+SELECT Gender, 
+COUNT(Gender) AS "Total #NASA Astronauts", 
+ROUND(AVG(Space_Flight_hr)) AS "Average #of Space Flight Hours", 
+SUM(Space_Flight_hr) AS "Total #of Space Flight Hours" 
+FROM astronauts 
+GROUP BY Gender;
+
+/* Which female astronaut has logged the highest amount of space walk hours? Which male astronaut? */
+
+SELECT Gender, 
+Name, 
+MAX(Space_Walks_hr) AS "Total #of Space Walk Hours", 
+Missions 
+FROM astronauts 
+GROUP BY Gender;
+
+/* Which astronaut has logged the most space flight hours? */
+
+SELECT Name, 
+Birth_date AS "Birth Date", 
+MAX(Space_Flight_hr) AS "Highest #of Space Flight Hours", 
+Missions FROM astronauts;
+
+/* Which decade had the most astronauts? Which decade saw the most space flight hours or space walk hours? */
+
 SELECT
     CASE
         WHEN Year < 1960 THEN "1950's"
@@ -419,29 +448,75 @@ SELECT
         WHEN Year IS NULL THEN "Unidentified"
         ELSE "Error"
     END as "Decade",
-    COUNT(*) AS Astronauts, ROUND(AVG(Space_Flight_hr)) AS "Average #of Space Flight Hours", ROUND(AVG(Space_Walks_hr)) AS "Average #of Space Walk Hours" FROM astronauts GROUP BY Decade ORDER BY Decade ASC;
+    COUNT(*) AS Astronauts, 
+ROUND(AVG(Space_Flight_hr)) AS "Average #of Space Flight Hours", 
+ROUND(AVG(Space_Walks_hr)) AS "Average #of Space Walk Hours" 
+FROM astronauts 
+GROUP BY Decade 
+ORDER BY Decade ASC;
     
-#Which years employed the most female astronauts?
-SELECT Year, COUNT(*) AS "Total Number of Female Astronauts" FROM astronauts WHERE Gender ="Female" AND Year IS NOT NULL GROUP BY Year HAVING COUNT(*) > 0;
+/* Which years employed the most female astronauts? */
+
+SELECT Year, 
+COUNT(*) AS "Total Number of Female Astronauts" 
+FROM astronauts 
+WHERE Gender ="Female" AND Year IS NOT NULL 
+GROUP BY Year HAVING COUNT(*) > 0;
     
-#Which astronauts have completed more than 5 space flights?
-SELECT Name, SUM(Space_Flights) AS "Number of Space Flights", Missions FROM astronauts GROUP BY Name HAVING "Number of Space Flights" > 5;
+/* Which astronauts have completed more than 5 space flights? */
 
-#Which undergraduate majors have logged the most space flight hours and space walks?
-SELECT Undergraduate_Major AS "Undergraduate Major", SUM(Space_Flight_hr) AS "Total Space Flight Hours", SUM(Space_Walks) AS "Total Number of Space Walks" FROM astronauts GROUP BY Undergraduate_Major HAVING SUM(Space_Flight_hr) > 30000 AND SUM(Space_Walks) > 20;
+SELECT Name, 
+SUM(Space_Flights) AS "Number of Space Flights", 
+Missions 
+FROM astronauts 
+GROUP BY Name HAVING "Number of Space Flights" > 5;
 
-#Which military ranks have logged the most space flight hours and space walks?
-SELECT Military_Rank AS "Military Rank", SUM(Space_Flight_hr) AS "Total Space Flight Hours", SUM(Space_Walks) AS "Total Number of Space Walks" FROM astronauts WHERE Military_Rank IS NOT NULL GROUP BY Military_Rank HAVING SUM(Space_Flight_hr) > 30000 AND SUM(Space_Walks) > 20;
+/* Which undergraduate majors have logged the most space flight hours and space walks? */
 
-#Which colleges have produced the most NASA astronauts?
-SELECT Alma_Mater AS "Alma Mater", COUNT(*) AS "Total #of NASA Astronaut Graduates" FROM astronauts GROUP BY Alma_Mater HAVING COUNT(*) > 4;
+SELECT Undergraduate_Major AS "Undergraduate Major", 
+SUM(Space_Flight_hr) AS "Total Space Flight Hours", 
+SUM(Space_Walks) AS "Total Number of Space Walks" 
+FROM astronauts 
+GROUP BY Undergraduate_Major HAVING SUM(Space_Flight_hr) > 30000 AND SUM(Space_Walks) > 20;
 
-#Which college(s) has produced the most female NASA astronauts?
-SELECT COUNT(*) AS "Total #of Female NASA Astronaut Graduates", Alma_Mater AS "Alma Mater" FROM astronauts WHERE Gender ='Female' GROUP BY Alma_Mater HAVING COUNT(*) > 1;
+/* Which military ranks have logged the most space flight hours and space walks? */
 
-#Which astronauts died on missions?
-SELECT Name, Death_Mission AS "Death Mission", Birth_Date AS "Birth Date", Death_Date AS "Death Date" FROM astronauts WHERE Death_Mission IS NOT NULL GROUP BY Name;
+SELECT Military_Rank AS "Military Rank", 
+SUM(Space_Flight_hr) AS "Total Space Flight Hours", 
+SUM(Space_Walks) AS "Total Number of Space Walks" 
+FROM astronauts 
+WHERE Military_Rank IS NOT NULL 
+GROUP BY Military_Rank HAVING SUM(Space_Flight_hr) > 30000 AND SUM(Space_Walks) > 20;
 
-#How many deceased astronauts stepped foot in space?
-SELECT Name, Death_Date AS "Death Date", Space_Walks AS "Space Walks" FROM astronauts WHERE Death_Date IS NOT NULL AND Space_Walks > 0 GROUP BY Name;
+/* Which colleges have produced the most NASA astronauts? */
+
+SELECT Alma_Mater AS "Alma Mater", 
+COUNT(*) AS "Total #of NASA Astronaut Graduates" 
+FROM astronauts 
+GROUP BY Alma_Mater HAVING COUNT(*) > 4;
+
+/* Which college(s) has produced the most female NASA astronauts? */
+
+SELECT COUNT(*) AS "Total #of Female NASA Astronaut Graduates", 
+Alma_Mater AS "Alma Mater" 
+FROM astronauts 
+WHERE Gender ='Female' 
+GROUP BY Alma_Mater HAVING COUNT(*) > 1;
+
+/* Which astronauts died on missions? */
+
+SELECT Name, 
+Death_Mission AS "Death Mission", 
+Birth_Date AS "Birth Date", 
+Death_Date AS "Death Date" 
+FROM astronauts 
+WHERE Death_Mission IS NOT NULL GROUP BY Name;
+
+/* How many deceased astronauts stepped foot in space? */
+
+SELECT Name, 
+Death_Date AS "Death Date", 
+Space_Walks AS "Space Walks" 
+FROM astronauts 
+WHERE Death_Date IS NOT NULL AND Space_Walks > 0 GROUP BY Name;
     
