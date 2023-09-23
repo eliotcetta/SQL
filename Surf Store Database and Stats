@@ -2,21 +2,23 @@
 
 CREATE TABLE surf_store (id INTEGER PRIMARY KEY, item TEXT, price_in_dollars INTEGER, inventory INTEGER, section TEXT);
 
-INSERT INTO surf_store VALUES (1, "Longboard Surfboard", 150.99, 10, "watersports");
-INSERT INTO surf_store VALUES (2, "Blue 5 Panel Hat", 25.00, 45, "apparel");
-INSERT INTO surf_store VALUES (3, "Green 5 Panel Hat", 25.00, 37, "apparel");
-INSERT INTO surf_store VALUES (4, "Skipper Fishboard", 120.00, 13, "watersports");
-INSERT INTO surf_store VALUES (5, "Shortboard Surfboard", 145.00, 12, "watersports");
-INSERT INTO surf_store VALUES (6, "Premium Surf Wax", 15.99, 55, "watersports");
-INSERT INTO surf_store VALUES (7, "Hemp Surf Wax", 17.99, 41, "watersports");
-INSERT INTO surf_store VALUES (8, "Shark Tooth Necklace", 25.00, 56, "accessories");
-INSERT INTO surf_store VALUES (9, "Black Canvas Backpack", 55.00, 39, "utility");
-INSERT INTO surf_store VALUES (10, "Funboard Surfboard", 155.00, 18, "watersports");
-INSERT INTO surf_store VALUES (11, "Waterproof Wrist Watch", 35.00, 34, "accessories");
-INSERT INTO surf_store VALUES (12, "Igloo Cooler", 75.00, 52, "utility");
-INSERT INTO surf_store VALUES (13, "Rainbow Parasol Umbrella", 55.00, 68, "outdoor");
-INSERT INTO surf_store VALUES (14, "Quick-Dry Beach Towel", 15.99, 170, "outdoor");
-INSERT INTO surf_store VALUES (15, "Backpack Style Beach Chair", 55.00, 45, "outdoor");
+INSERT INTO surf_store 
+VALUES 
+  (1, "Longboard Surfboard", 150.99, 10, "watersports"),
+  (2, "Blue 5 Panel Hat", 25.00, 45, "apparel"),
+  (3, "Green 5 Panel Hat", 25.00, 37, "apparel"),
+  (4, "Skipper Fishboard", 120.00, 13, "watersports"),
+  (5, "Shortboard Surfboard", 145.00, 12, "watersports"),
+  (6, "Premium Surf Wax", 15.99, 55, "watersports"),
+  (7, "Hemp Surf Wax", 17.99, 41, "watersports"),
+  (8, "Shark Tooth Necklace", 25.00, 56, "accessories"),
+  (9, "Black Canvas Backpack", 55.00, 39, "utility"),
+  (10, "Funboard Surfboard", 155.00, 18, "watersports"),
+  (11, "Waterproof Wrist Watch", 35.00, 34, "accessories"),
+  (12, "Igloo Cooler", 75.00, 52, "utility"),
+  (13, "Rainbow Parasol Umbrella", 55.00, 68, "outdoor"),
+  (14, "Quick-Dry Beach Towel", 15.99, 170, "outdoor"),
+  (15, "Backpack Style Beach Chair", 55.00, 45, "outdoor");
 
 /* Display the aggregate inventory. */
 
