@@ -29,8 +29,7 @@ MIN(danceability) AS min_dance,
 MAX(danceability) AS max_dance
 FROM BIT_DB.Spotifydata;
 
-/* Group the songs by their acousticness values to determine the distribution 
-of acoustic and electronic songs in the dataset. */
+/* Group the songs by their acousticness values to determine the distribution of acoustic and electronic songs in the dataset. */
 
 SELECT 
 CASE
@@ -122,8 +121,7 @@ FROM BIT_DB.Spotifydata) AS categor_data
 GROUP BY energy_val, dance_val
 ORDER BY energy_val, dance_val;
 
-/* Use the energy, key, loudness, speechiness, acousticness, 
-instrumentalness, and tempo values to attempt genre classification. */
+/* Use the energy, key, loudness, speechiness, acousticness, instrumentalness, and tempo values to attempt genre classification. */
 
 SELECT distinct artist_name,
 CASE
@@ -237,8 +235,7 @@ FROM BIT_DB.Spotifydata) AS categor_data
 GROUP BY artist_name
 ORDER BY artist_name;
 
-/* How do key, tempo, loudness, and energy levels relate to 
-valence values of the top 5 songs? */
+/* How do key, tempo, loudness, and energy levels relate to valence values of the top 5 songs? */
 
 SELECT track_name,
 CASE
@@ -278,8 +275,7 @@ WHERE popularity>=94
 GROUP BY track_name
 ORDER BY popularity DESC;
 
-/* Determine the range and proportions 
-of speechiness values. */
+/* Determine the range and proportions of speechiness values. */
 
 SELECT speech_val,
 COUNT(*) AS total
