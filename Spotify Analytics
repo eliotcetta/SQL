@@ -1,5 +1,4 @@
-/* For this project, I utilized Spotify data sourced from Kaggle and utilized 
-the following table to input data. */
+/* For this project, I utilized Spotify data sourced from Kaggle and utilized the following table to input data. */
 
 CREATE TABLE BIT_DB.Spotifydata (
 id integer PRIMARY KEY,
