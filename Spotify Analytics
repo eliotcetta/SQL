@@ -1,0 +1,320 @@
+/* For this project, I utilized Spotify data sourced from Kaggle and utilized 
+the following table to input data. */
+
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+/* What are the average, minimum, and maximum danceability values? */
+
+SELECT AVG(danceability) AS avg_dance,
+MIN(danceability) AS min_dance,
+MAX(danceability) AS max_dance
+FROM BIT_DB.Spotifydata;
+
+/* Group the songs by their acousticness values to determine the distribution 
+of acoustic and electronic songs in the dataset. */
+
+SELECT 
+CASE
+    WHEN acousticness<=.25 THEN 'acoustic'
+    WHEN acousticness<=.5 THEN 'semi-acoustic'
+    WHEN acousticness<=.75 THEN 'mixed'
+    WHEN acousticness<=1 THEN 'electronic'
+    ELSE 'other'
+END AS 'genre',
+COUNT(*) AS num_of_songs
+FROM BIT_DB.Spotifydata
+GROUP BY genre
+ORDER BY acousticness asc;
+
+/* Which artists produced the most energetic music? */
+
+SELECT artist_name,
+energy
+FROM BIT_DB.Spotifydata
+WHERE energy>=0.80
+ORDER BY energy desc;
+
+/* Which songs have the highest instrumentalness values? */
+
+SELECT track_name,
+instrumentalness
+FROM BIT_DB.Spotifydata
+ORDER BY instrumentalness DESC
+LIMIT 5;
+
+/* Is one musical key more common than the other? */
+
+SELECT
+CASE
+    WHEN song_mode=1 THEN 'major'
+    WHEN song_mode=0 THEN 'minor'
+    ELSE 'other'
+END AS 'key',
+COUNT(*) AS amount
+FROM BIT_DB.Spotifydata
+GROUP BY key;
+
+/* Do any artists have more than one top 50 songs? */
+
+SELECT artist_name,
+COUNT(*) AS num_songs
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+HAVING num_songs>1
+ORDER BY num_songs desc;
+
+/* What are the average, minimum, and maximum 
+durations of the songs? */
+
+SELECT ROUND(AVG(duration_ms)/1000,1) AS avg_dur_s,
+ROUND(MIN(duration_ms)/1000,1) AS min_dur_s,
+ROUND(MAX(duration_ms)/1000,1) AS max_dur_s
+FROM BIT_DB.Spotifydata;
+
+/* What are the most common time signatures? */
+
+SELECT time_signature,
+COUNT(*) AS total_songs
+FROM BIT_DB.Spotifydata
+GROUP BY time_signature;
+
+/* Does higher energy suggest higher danceability? */
+
+SELECT energy_val,
+dance_val,
+COUNT(*) AS num_tracks
+FROM (
+SELECT
+    CASE
+        WHEN energy<=0.25 THEN 'very low'
+        WHEN energy<=0.50 THEN 'low'
+        WHEN energy<=0.75 THEN 'moderate'
+        WHEN energy<=1.0 THEN 'high'
+        ELSE 'other'
+END AS 'energy_val',
+    CASE
+        WHEN danceability<=0.25 THEN 'very low'
+        WHEN danceability<=0.50 THEN 'low'
+        WHEN danceability<=0.75 THEN 'moderate'
+        WHEN danceability<=1.0 THEN 'high'
+        ELSE 'other'
+END AS 'dance_val'
+FROM BIT_DB.Spotifydata) AS categor_data
+GROUP BY energy_val, dance_val
+ORDER BY energy_val, dance_val;
+
+/* Use the energy, key, loudness, speechiness, acousticness, 
+instrumentalness, and tempo values to attempt genre classification. */
+
+SELECT distinct artist_name,
+CASE
+    WHEN energy_val = 'high' 
+    AND loud_val = 'moderate'
+    AND acoust_val = 'low' OR acoust_val = 'very low'
+    AND tempo_val = 'moderate' THEN 'Pop Music'
+    WHEN energy_val = 'low' OR acoust_val = 'very low'
+    AND loud_val = 'low' OR loud_val = 'very low'
+    AND acoust_val = 'high'
+    AND tempo_val = 'slow' THEN 'Classic Music' 
+    WHEN energy_val = 'high'
+    AND loud_val = 'high'
+    AND acoust_val = 'moderate'
+    AND tempo_val = 'fast' OR tempo_val = 'very fast' THEN 'Rock Music'
+    WHEN energy_val = 'high' OR energy_val = ' moderate'
+    AND loud_val = 'low' OR loud_val = 'very low'
+    AND acoust_val = 'low' OR acoust_val = 'very low'
+    AND tempo_val = 'fast' OR tempo_val = 'slow' THEN 'R&B'
+    ELSE 'Uncat'
+END AS 'genre'
+FROM (
+SELECT
+    CASE
+        WHEN energy<=0.25 THEN 'very low'
+        WHEN energy<=0.50 THEN 'low'
+        WHEN energy<=0.75 THEN 'moderate'
+        WHEN energy<=1.0 THEN 'high'
+        ELSE 'other'
+END AS 'energy_val',
+    CASE
+        WHEN loudness<=0.25 THEN 'very low'
+        WHEN loudness<=0.50 THEN 'low'
+        WHEN loudness<=0.75 THEN 'moderate'
+        WHEN loudness<=1.0 THEN 'high'
+        ELSE 'other'
+END AS 'loud_val',
+     CASE
+        WHEN acousticness<=0.25 THEN 'very low'
+        WHEN acousticness<=0.50 THEN 'low'
+        WHEN acousticness<=0.75 THEN 'moderate'
+        WHEN acousticness<=1.0 THEN 'high'
+        ELSE 'other'
+END AS 'acoust_val',
+    CASE
+         WHEN tempo<=90 THEN 'slow'
+        WHEN tempo<=120 THEN 'moderate'
+        WHEN tempo<=150 THEN 'fast'
+        WHEN tempo>150 THEN 'very fast'
+        ELSE 'other'
+END AS 'tempo_val',
+    track_name
+FROM BIT_DB.Spotifydata) AS categor_data
+GROUP BY artist_name
+ORDER BY track_name;
+
+/* Classify artists by genre. */
+ 
+SELECT distinct
+CASE
+    WHEN energy_val = 'high' 
+    AND loud_val = 'moderate'
+    AND acoust_val = 'low' OR acoust_val = 'very low'
+    AND tempo_val = 'moderate' THEN 'Pop Music'
+    WHEN energy_val = 'low' OR acoust_val = 'very low'
+    AND loud_val = 'low' OR loud_val = 'very low'
+    AND acoust_val = 'high'
+    AND tempo_val = 'slow' THEN 'Classic Music' 
+    WHEN energy_val = 'high'
+    AND loud_val = 'high'
+    AND acoust_val = 'moderate'
+    AND tempo_val = 'fast' OR tempo_val = 'very fast' THEN 'Rock Music'
+    WHEN energy_val = 'high' OR energy_val = ' moderate'
+    AND loud_val = 'low' OR loud_val = 'very low'
+    AND acoust_val = 'low' OR acoust_val = 'very low'
+    AND tempo_val = 'fast' OR tempo_val = 'slow' THEN 'R&B'
+    ELSE 'Uncat'
+END AS 'genre'
+FROM (
+SELECT
+    CASE
+        WHEN energy<=0.25 THEN 'very low'
+        WHEN energy<=0.50 THEN 'low'
+        WHEN energy<=0.75 THEN 'moderate'
+        WHEN energy<=1.0 THEN 'high'
+        ELSE 'other'
+END AS 'energy_val',
+    CASE
+        WHEN loudness<=0.25 THEN 'very low'
+        WHEN loudness<=0.50 THEN 'low'
+        WHEN loudness<=0.75 THEN 'moderate'
+        WHEN loudness<=1.0 THEN 'high'
+        ELSE 'other'
+END AS 'loud_val',
+     CASE
+        WHEN acousticness<=0.25 THEN 'very low'
+        WHEN acousticness<=0.50 THEN 'low'
+        WHEN acousticness<=0.75 THEN 'moderate'
+        WHEN acousticness<=1.0 THEN 'high'
+        ELSE 'other'
+END AS 'acoust_val',
+    CASE
+        WHEN tempo<=90 THEN 'slow'
+        WHEN tempo<=120 THEN 'moderate'
+        WHEN tempo<=150 THEN 'fast'
+        WHEN tempo>150 THEN 'very fast'
+        ELSE 'other'
+END AS 'tempo_val',
+    artist_name
+FROM BIT_DB.Spotifydata) AS categor_data
+GROUP BY artist_name
+ORDER BY artist_name;
+
+/* How do key, tempo, loudness, and energy levels relate to 
+valence values of the top 5 songs? */
+
+SELECT track_name,
+CASE
+    WHEN song_mode=1 THEN 'major'
+    WHEN song_mode=0 THEN 'minor'
+    ELSE 'other'
+END AS 'key', 
+CASE
+     WHEN tempo<=90 THEN 'slow'
+     WHEN tempo<=120 THEN 'moderate'
+     WHEN tempo<=150 THEN 'fast'
+     WHEN tempo>150 THEN 'very fast'
+     ELSE 'other'
+END AS 'tempo_val',
+CASE
+    WHEN loudness<=0.25 THEN 'very low'
+    WHEN loudness<=0.50 THEN 'low'
+    WHEN loudness<=0.75 THEN 'moderate'
+    WHEN loudness<=1.0 THEN 'high'
+END AS 'loud_val',
+  CASE
+        WHEN energy<=0.25 THEN 'very low'
+        WHEN energy<=0.50 THEN 'low'
+        WHEN energy<=0.75 THEN 'moderate'
+        WHEN energy<=1.0 THEN 'high'
+        ELSE 'other'
+END AS 'energy_val',
+  CASE
+        WHEN valence<=0.25 THEN 'sad'
+        WHEN valence<=0.50 THEN 'reflective'
+        WHEN valence<=0.75 THEN 'content'
+        WHEN valence>.75 THEN 'joyful'
+        ELSE 'other'
+END AS 'valence'
+FROM BIT_DB.Spotifydata
+WHERE popularity>=94
+GROUP BY track_name
+ORDER BY popularity DESC;
+
+/* Determine the range and proportions 
+of speechiness values. */
+
+SELECT speech_val,
+COUNT(*) AS total
+FROM 
+(SELECT
+    CASE
+     WHEN speechiness<=0.05 THEN 'instrumental'
+     WHEN speechiness<=0.10 THEN 'low vocals'
+     WHEN speechiness<=0.20 THEN 'balanced mix'
+     WHEN speechiness<=0.30 THEN 'spoken word'
+     ELSE 'other'
+END AS 'speech_val'
+FROM BIT_DB.Spotifydata) AS categ_data
+GROUP BY speech_val
+ORDER BY speech_val;
+
+/* Compare the musical key to valence values. */
+
+SELECT music_key,
+valence,
+COUNT(*) AS total_num
+FROM(
+SELECT
+CASE
+    WHEN song_mode=1 THEN 'major'
+    WHEN song_mode=0 THEN 'minor'
+    ELSE 'other'
+END AS 'music_key',
+CASE
+     WHEN valence<=0.25 THEN 'sad'
+        WHEN valence<=0.50 THEN 'reflective'
+        WHEN valence<=0.75 THEN 'content'
+        WHEN valence>.75 THEN 'joyful'
+        ELSE 'other'
+END AS 'valence'
+FROM BIT_DB.Spotifydata) AS cat_data
+GROUP BY valence, music_key
+ORDER BY valence, music_key;
