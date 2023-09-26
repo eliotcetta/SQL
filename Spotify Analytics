@@ -313,3 +313,18 @@ END AS 'valence'
 FROM BIT_DB.Spotifydata) AS cat_data
 GROUP BY valence, music_key
 ORDER BY valence, music_key;
+
+/* Calculate the average popularity for the artists. Which artists are the most popular? */
+
+WITH tempTable AS (
+    SELECT
+    s.artist_name, 
+    AVG(s.popularity) AS avg_popularity
+    FROM Spotifydata s
+    GROUP BY s.artist_name
+)
+SELECT artist_name,
+avg_popularity,
+'Top Star' AS tag
+FROM tempTable
+WHERE avg_popularity>=90;
