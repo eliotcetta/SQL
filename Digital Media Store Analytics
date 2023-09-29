@@ -1,0 +1,241 @@
+/* This analysis was conducted using an existing dataset containing 11 tables obtained from a digital media store; */
+
+/* Find a distinct list of billing countries. How many customers are from each country? */
+
+SELECT country,
+COUNT(distinct CustomerId) as 
+customers_per_country
+FROM chinook.customers
+GROUP BY country;
+
+/* Who are the top 10 customers with the highest total invoice amounts? */
+
+WITH purchaseTable AS (
+Select InvoiceId,
+CustomerId,
+SUM(Total) AS total_purchase
+FROM invoices 
+GROUP BY CustomerId
+) 
+SELECT c.FirstName, 
+C.LastName,
+total_purchase
+FROM purchaseTable
+LEFT JOIN chinook.customers c
+ON c.CustomerId=purchaseTable.CustomerId
+GROUP BY c.CustomerId
+ORDER BY total_purchase DESC
+LIMIT 10;
+
+/* What is the average total purchase amount per customer? */
+
+Select
+ROUND(AVG(Total),1) AS avg_purchase
+FROM chinook.invoices;
+
+/* How many customers are assigned to each support representative and how active are those customers in terms of purchasing? */
+
+SELECT e.EmployeeId,
+e.FirstName,
+e.LastName,
+COUNT(DISTINCT c.CustomerId) AS num_customers,
+COUNT(DISTINCT i.InvoiceID) AS num_invoices
+FROM chinook.employees e
+LEFT JOIN chinook.customers c
+ON e.EmployeeId=c.SupportRepId
+LEFT JOIN chinook.invoices i
+ON i.CustomerId=c.CustomerId
+GROUP BY e.EmployeeId;
+
+/* What is the total revenue generated from invoices per country? */
+
+WITH revenueTable AS (
+SELECT
+i.BillingCountry,
+SUM(it.UnitPrice*it.Quantity) AS total_revenue
+FROM invoices i
+LEFT JOIN invoice_items it ON it.InvoiceId=i.InvoiceId
+GROUP BY i.BillingCountry
+)
+SELECT 
+BillingCountry,
+ROUND(SUM(total_revenue),2) AS total_revenue
+FROM revenueTable
+GROUP BY BillingCountry
+ORDER BY total_revenue DESC;
+
+/* How much revenue did each track generate in total? */
+
+WITH revenueTable AS (
+SELECT
+t.Name,
+SUM(it.UnitPrice*it.Quantity) AS total_revenue
+FROM tracks t
+LEFT JOIN invoice_items it ON it.TrackId=t.TrackId
+GROUP BY t.TrackId
+)
+SELECT 
+Name,
+ROUND(SUM(total_revenue), 2) AS total_revenue
+FROM revenueTable
+GROUP BY Name
+ORDER BY total_revenue DESC;
+
+/* What is the overall average invoice total? */
+
+SELECT ROUND(AVG(Total),2) AS avg_invoice_total
+FROM chinook.invoices;
+
+/* What is the distribution of invoice totals? */
+
+SELECT
+COUNT(InvoiceId) AS total_invoices,
+CASE
+    WHEN Total<5 THEN '$0.99-$5.00'
+    WHEN Total<=10 THEN '$5.00-$10.00'
+    WHEN Total<=15 THEN '$11.00-$15.00'
+    WHEN Total<=20 THEN '$16.00-$20.00'
+    WHEN Total>20 THEN 'Over $20.00'
+    ELSE 'Uncategorized'
+END AS 'total_amt_range'
+FROM chinook.invoices
+GROUP BY total_amt_range
+ORDER BY total_invoices ASC;
+
+/* How many albums are there in each genre? */
+
+SELECT COUNT(t.AlbumId) AS num_albums,
+g.Name
+FROM chinook.tracks t
+LEFT JOIN chinook.genres g
+ON t.GenreId=g.GenreId
+GROUP BY g.Name
+ORDER BY num_albums DESC;
+
+/* Which albums have the most purchases and who are the artists? */
+
+SELECT ar.Name AS artist,
+a.Title AS album,
+COUNT(a.Title) AS num_purchases
+FROM chinook.albums a
+LEFT JOIN chinook.tracks t
+ON a.albumid=t.albumid
+LEFT JOIN chinook.artists ar
+ON a.artistid=ar.artistid
+LEFT JOIN chinook.invoice_items it
+ON t.trackid=it.trackid
+LEFT JOIN chinook.invoices i
+ON it.invoiceid=i.invoiceid
+GROUP BY artist
+ORDER BY num_purchases DESC
+LIMIT 10;
+
+/* Who are the top-selling artists by total revenue? */
+
+WITH artistRevenue AS (
+SELECT
+ar.Name,
+SUM(it.Quantity*it.UnitPrice) AS artist_revenue
+FROM tracks t
+LEFT JOIN invoice_items it
+ON it.TrackId=t.TrackId
+LEFT JOIN albums a
+ON t.AlbumId=a.AlbumId
+LEFT JOIN artists ar
+ON a.ArtistId=ar.ArtistId
+GROUP BY a.ArtistId
+)
+SELECT 
+Name,
+ROUND(SUM(artist_revenue),2) AS total_revenue
+FROM artistRevenue 
+GROUP BY Name
+ORDER BY total_revenue DESC
+LIMIT 10;
+
+/* What is the average number of tracks in each playlist? */
+
+WITH playlistCTE AS (
+SELECT
+t.Trackid,
+COUNT(t.TrackId) AS total_tracks,
+p.Name
+FROM tracks t
+LEFT JOIN playlist_track pt
+ON t.TrackId=pt.TrackId
+LEFT JOIN playlists p
+ON pt.PlaylistId=p.PlaylistId
+GROUP BY p.Name)
+SELECT 
+ROUND(AVG(total_tracks),2) AS avg_num_tracks
+FROM playlistCTE;
+
+/* Which track belongs to the most playlists? */
+
+WITH trackCTE AS (
+SELECT
+t.Name,
+COUNT(DISTINCT pt.PlaylistId) AS num_playlists
+FROM tracks t
+LEFT JOIN playlist_track pt
+ON t.TrackId=pt.TrackId
+GROUP BY t.TrackId, t.name
+)
+SELECT
+trackCTE.Name AS song_name,
+MAX(num_playlists) AS playlist_appear
+FROM trackCTE;
+
+/* How many tracks are associated with each genre? */
+
+SELECT g.name,
+COUNT(t.Trackid) AS num_songs
+FROM chinook.tracks t
+LEFT JOIN chinook.genres g
+ON t.genreid=g.genreid
+GROUP BY g.name
+ORDER BY num_songs DESC;
+
+/* What are the top-selling tracks by quantity? */
+
+SELECT t.Name, 
+COUNT(ii.InvoiceId) AS num_sales
+FROM chinook.invoice_items ii
+LEFT JOIN chinook.tracks t
+ON ii.TrackId=t.TrackId
+GROUP BY t.Name
+ORDER BY num_sales DESC
+LIMIT 5;
+
+/* How many invoices were issued to customers in each state? */
+
+SELECT BillingState AS state,
+COUNT(InvoiceId) AS num_invoices
+FROM chinook.invoices
+WHERE state <> 'NULL' AND
+length(state) = 2
+GROUP BY state
+ORDER BY num_invoices DESC;
+
+/* Which composers have the most tracks? */
+
+SELECT Composer,
+COUNT(TrackId) AS num_tracks
+FROM chinook.tracks
+WHERE Composer <> 'NULL'
+GROUP BY Composer
+ORDER BY num_tracks DESC
+LIMIT 15;
+
+/* Who are the most purchased artists? */
+
+SELECT ar.Name,
+COUNT(t.Name) AS num_purchase
+FROM chinook.tracks t
+LEFT JOIN chinook.albums a
+ON t.AlbumId=a.AlbumId
+LEFT JOIN chinook.artists ar
+ON a.ArtistId=ar.ArtistId
+GROUP BY ar.Name
+ORDER BY num_purchase DESC
+LIMIT 20;
