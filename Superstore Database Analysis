@@ -1,4 +1,4 @@
-# This analysis utilized the following dataset:
+# This analysis utilized the following dataset.
 
 CREATE TABLE superstore (
     item_id INTEGER PRIMARY KEY,
@@ -27,13 +27,13 @@ VALUES
     (14, 'Cutlery Set', 'Kitchen Supplies', 34.50, 40, 4.4),
     (15, 'Cozy Throw Blanket', 'Furnishings', 24.99, 100, 4.2);
 
-/* Order items by price */
+# Order items by price 
 
 SELECT item_name, category, price
 FROM superstore
 ORDER BY price asc;
 
-/* Which category of items has the highest average price? The lowest? */
+# Which category of items has the highest average price? The lowest? 
 
 SELECT category,
 ROUND(AVG(price)) AS avg_price, 
@@ -42,7 +42,7 @@ FROM superstore
 GROUP BY category
 ORDER BY avg_price;
 
-/* What is the total price for all kitchen supplies? */
+# What is the total price for all kitchen supplies? 
 
 SELECT category,
 SUM(price) AS total_price,
@@ -51,7 +51,7 @@ FROM superstore
 WHERE category = 'Kitchen Supplies'
 ORDER BY price asc;
 
-/* Which items are low in stock (30 or fewer units)? */
+# Which items are low in stock (30 or fewer units)? 
 
 SELECT item_name, 
 stock_quantity
@@ -59,7 +59,7 @@ FROM superstore
 WHERE stock_quantity < 31
 ORDER by stock_quantity;
 
-/* Which items are in excess at the bi-annual inventory count (70 or more units)? */
+# Which items are in excess at the bi-annual inventory count (70 or more units)? 
 
 SELECT item_name, 
 stock_quantity
