@@ -1,4 +1,4 @@
-/* This project utilized the following schema */
+# This project utilized the following schema 
 
 CREATE TABLE netflix_titles_info
     ("show_id" varchar(5), "type" varchar(7), "title" varchar(58), "country" varchar(74), "date_added" timestamp, "release_year" int, "rating" varchar(5), "duration" varchar(9), "listed_in" varchar(74))
@@ -73,7 +73,7 @@ FROM "netflix_titles_info" info
 LEFT JOIN "netflix_people" people
 ON info.show_id = people.show_id;
 
-/* Which directors released shows in 2020? */
+# Which directors released shows in 2020? 
 
 SELECT people.director,
 info.release_year, 
@@ -84,7 +84,7 @@ ON info.show_id = people.show_id
 WHERE info.release_year=2020 AND
 people.director IS NOT NULL;
 
-/* How many directors directed movies? Shows? */
+# How many directors directed movies? Shows? 
 
 SELECT COUNT(people.director) AS directors,
 info.type
@@ -93,24 +93,24 @@ LEFT JOIN "netflix_titles_info" info
 ON info.show_id = people.show_id
 GROUP BY info.type;
 
-/* How many movie titles are there in the database? */
+# How many movie titles are there in the database? 
 
 SELECT COUNT(*)
 FROM "netflix_titles_info"
 WHERE type='Movie';
 
-/* When was the most recent batch of tv shows and/or movies added to the database? */
+# When was the most recent batch of tv shows and/or movies added to the database? 
 
 SELECT MAX(date(date_added)) AS recent_add
 FROM "netflix_titles_info";
 
-/* List all of the movies and tv shows in alphabetical order. */
+# List all of the movies and tv shows in alphabetical order. 
 
 SELECT title
 FROM "netflix_titles_info"
 ORDER BY title asc;
 
-/* Who was the Director for the movie The Starling? */
+# Who was the Director for the movie The Starling? 
 
 SELECT people.director
 FROM "netflix_people" people
@@ -118,7 +118,7 @@ LEFT JOIN "netflix_titles_info" info
 ON people.show_id=info.show_id
 WHERE info.title='The Starling';
 
-/* What is the oldest movie in the database and what year was it made? */
+# What is the oldest movie in the database and what year was it made? 
 
 SELECT title, release_year
 FROM "netflix_titles_info"
