@@ -96,7 +96,7 @@ CASE
 END AS 'recommendation'
 FROM CityBikeLanes;
 
-# Do protected lanes have a higher average safety rating? */
+# Do protected lanes have a higher average safety rating?
 
 SELECT protected,
 ROUND(AVG(safetyrating),1) AS avg_safety_rating
