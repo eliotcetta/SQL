@@ -1,4 +1,4 @@
-#Create a store database.
+# Create a store database.
 
 CREATE TABLE surf_store (id INTEGER PRIMARY KEY, item TEXT, price_in_dollars INTEGER, inventory INTEGER, section TEXT);
 
@@ -20,25 +20,25 @@ VALUES
   (14, "Quick-Dry Beach Towel", 15.99, 170, "outdoor"),
   (15, "Backpack Style Beach Chair", 55.00, 45, "outdoor");
 
-/* Display the aggregate inventory. */
+# Display the aggregate inventory.
 
 SELECT SUM(inventory) "total_inventory"
 FROM surf_store;
 
-/* Display items with an inventory of 101 or more ordered by section. */
+# Display items with an inventory of 101 or more ordered by section. 
 
 SELECT * 
 FROM surf_store 
 WHERE inventory > 100 
 ORDER BY section;
 
-/* Display the avg price of surfboards in store? */
+# Display the avg price of surfboards in store? 
 
 SELECT AVG(price_in_dollars) "avg surfboard price"
 FROM surf_store
 where section='watersports'; 
 
-/* Display the items with an inventory below 50. */
+# Display the items with an inventory below 50. 
 
 SELECT * 
 FROM surf_store 
