@@ -1,4 +1,4 @@
-/* This analysis utilized the following sourced dataset */
+# This analysis utilized the following sourced dataset 
 
 CREATE TABLE fortune_companies (
     company_id INTEGER PRIMARY KEY,
@@ -61,7 +61,7 @@ VALUES
 SELECT *
 FROM fortune_companies;
 
-/* Which companies are the most appealing to prospective employees in terms of benefits, leave, and tenure? */
+# Which companies are the most appealing to prospective employees in terms of benefits, leave, and tenure?
 
 SELECT
   CASE
@@ -81,7 +81,7 @@ WHERE paid_time_off_days>=20 AND
  GROUP BY company_name
  ORDER BY paid_time_off_days desc;
  
- /* The least appealing? */
+# The least appealing?
 
 SELECT
   CASE
@@ -101,7 +101,7 @@ WHERE paid_time_off_days<20 AND
  GROUP BY company_name
  ORDER BY paid_time_off_days desc;
  
- /* Which industries, on average, are the friendliest to new parents? */
+# Which industries, on average, are the friendliest to new parents? 
  
  SELECT industry, 
  SUM(maternity_leave_weeks) AS total_maternity_weeks,
@@ -111,7 +111,7 @@ WHERE paid_time_off_days<20 AND
   HAVING avg_maternity_leave>12
   ORDER BY total_maternity_weeks desc;
   
- /* Rank the healthcare industry's friendliness to new parents. */
+# Rank the healthcare industry's friendliness to new parents. 
 
   SELECT company_name,
    CASE 
@@ -124,7 +124,7 @@ WHERE paid_time_off_days<20 AND
   GROUP BY company_name
   ORDER BY maternity_leave_weeks desc;
   
- /* Which small companies (<2500 employees) have healthcare benefits and at least 20 days paid leave? */
+# Which small companies (<2500 employees) have healthcare benefits and at least 20 days paid leave? 
  
  SELECT company_name, employees,
   CASE
@@ -138,7 +138,7 @@ WHERE paid_time_off_days<20 AND
   paid_time_off_days>=20
   ORDER BY employees desc;
 
- /* Which industries have an average revenue of at least 250 billion? */
+# Which industries have an average revenue of at least 250 billion? 
 
 SELECT industry,
 ROUND(AVG(revenue),1) AS avg_revenue_billions 
@@ -146,7 +146,7 @@ FROM fortune_companies
 GROUP BY industry
 HAVING avg_revenue_billions>=250;
 
-/* What is the average tenure for companies with healthcare benefits? Without? */
+# What is the average tenure for companies with healthcare benefits? Without? 
 
 SELECT  
 CASE
@@ -157,7 +157,7 @@ CASE
 FROM fortune_companies
 GROUP BY healthcare_benefits;
 
-/* How many companies and total employees per industry? What are their respective average revenues? */
+# How many companies and total employees per industry? What are their respective average revenues? 
 
 SELECT industry, 
 COUNT(*) AS number_of_companies,
@@ -167,7 +167,7 @@ FROM fortune_companies
 GROUP BY industry
 ORDER BY avg_revenue desc;
 
-/* What is the revenue per employee for the top earning companies? */
+# What is the revenue per employee for the top earning companies? 
 
 SELECT company_name, 
 ROUND(((revenue *1000000000)/employees),1) AS revenue_per_employee
@@ -176,7 +176,7 @@ WHERE revenue>=400
 GROUP BY company_name
 ORDER BY revenue_per_employee desc;
 
-/* Which companies have the highest revenue per employee? */
+# Which companies have the highest revenue per employee? 
 
 SELECT company_name, 
 MAX(ROUND(((revenue *1000000000)/employees),1)) AS revenue_per_employee
@@ -185,7 +185,7 @@ GROUP BY company_name
 ORDER BY revenue_per_employee desc
 LIMIT 5;
 
-/* Which company in the technology industry has the worst average employee tenure? What leave and benefits do they offer? */
+# Which company in the technology industry has the worst average employee tenure? What leave and benefits do they offer? 
 
 SELECT company_name,
 MIN(avg_employee_tenure) AS avg_tenure,
