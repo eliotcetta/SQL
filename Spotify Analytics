@@ -1,4 +1,4 @@
-/* For this project, I utilized Spotify data sourced from Kaggle and utilized the following table to input data. */
+# For this project, I utilized Spotify data sourced from Kaggle and utilized the following table to input data. 
 
 CREATE TABLE BIT_DB.Spotifydata (
 id integer PRIMARY KEY,
@@ -21,14 +21,14 @@ duration_ms integer NOT NULL,
 time_signature integer NOT NULL 
 )
 
-/* What are the average, minimum, and maximum danceability values? */
+# What are the average, minimum, and maximum danceability values? 
 
 SELECT AVG(danceability) AS avg_dance,
 MIN(danceability) AS min_dance,
 MAX(danceability) AS max_dance
 FROM BIT_DB.Spotifydata;
 
-/* Group the songs by their acousticness values to determine the distribution of acoustic and electronic songs in the dataset. */
+# Group the songs by their acousticness values to determine the distribution of acoustic and electronic songs in the dataset. 
 
 SELECT 
 CASE
@@ -43,7 +43,7 @@ FROM BIT_DB.Spotifydata
 GROUP BY genre
 ORDER BY acousticness asc;
 
-/* Which artists produced the most energetic music? */
+# Which artists produced the most energetic music? 
 
 SELECT artist_name,
 energy
@@ -51,7 +51,7 @@ FROM BIT_DB.Spotifydata
 WHERE energy>=0.80
 ORDER BY energy desc;
 
-/* Which songs have the highest instrumentalness values? */
+# Which songs have the highest instrumentalness values? 
 
 SELECT track_name,
 instrumentalness
@@ -59,7 +59,7 @@ FROM BIT_DB.Spotifydata
 ORDER BY instrumentalness DESC
 LIMIT 5;
 
-/* Is one musical key more common than the other? */
+# Is one musical key more common than the other? 
 
 SELECT
 CASE
@@ -71,7 +71,7 @@ COUNT(*) AS amount
 FROM BIT_DB.Spotifydata
 GROUP BY key;
 
-/* Do any artists have more than one top 50 songs? */
+# Do any artists have more than one top 50 songs? 
 
 SELECT artist_name,
 COUNT(*) AS num_songs
@@ -80,22 +80,21 @@ GROUP BY artist_name
 HAVING num_songs>1
 ORDER BY num_songs desc;
 
-/* What are the average, minimum, and maximum 
-durations of the songs? */
+# What are the average, minimum, and maximum durations of the songs? 
 
 SELECT ROUND(AVG(duration_ms)/1000,1) AS avg_dur_s,
 ROUND(MIN(duration_ms)/1000,1) AS min_dur_s,
 ROUND(MAX(duration_ms)/1000,1) AS max_dur_s
 FROM BIT_DB.Spotifydata;
 
-/* What are the most common time signatures? */
+# What are the most common time signatures? 
 
 SELECT time_signature,
 COUNT(*) AS total_songs
 FROM BIT_DB.Spotifydata
 GROUP BY time_signature;
 
-/* Does higher energy suggest higher danceability? */
+# Does higher energy suggest higher danceability? 
 
 SELECT energy_val,
 dance_val,
@@ -120,7 +119,7 @@ FROM BIT_DB.Spotifydata) AS categor_data
 GROUP BY energy_val, dance_val
 ORDER BY energy_val, dance_val;
 
-/* Use the energy, key, loudness, speechiness, acousticness, instrumentalness, and tempo values to attempt genre classification. */
+# Use the energy, key, loudness, speechiness, acousticness, instrumentalness, and tempo values to attempt genre classification. 
 
 SELECT distinct artist_name,
 CASE
@@ -177,7 +176,7 @@ FROM BIT_DB.Spotifydata) AS categor_data
 GROUP BY artist_name
 ORDER BY track_name;
 
-/* Classify artists by genre. */
+# Classify artists by genre. 
  
 SELECT distinct
 CASE
@@ -234,7 +233,7 @@ FROM BIT_DB.Spotifydata) AS categor_data
 GROUP BY artist_name
 ORDER BY artist_name;
 
-/* How do key, tempo, loudness, and energy levels relate to valence values of the top 5 songs? */
+# How do key, tempo, loudness, and energy levels relate to valence values of the top 5 songs? 
 
 SELECT track_name,
 CASE
@@ -274,7 +273,7 @@ WHERE popularity>=94
 GROUP BY track_name
 ORDER BY popularity DESC;
 
-/* Determine the range and proportions of speechiness values. */
+# Determine the range and proportions of speechiness values. 
 
 SELECT speech_val,
 COUNT(*) AS total
@@ -291,7 +290,7 @@ FROM BIT_DB.Spotifydata) AS categ_data
 GROUP BY speech_val
 ORDER BY speech_val;
 
-/* Compare the musical key to valence values. */
+# Compare the musical key to valence values. 
 
 SELECT music_key,
 valence,
@@ -314,7 +313,7 @@ FROM BIT_DB.Spotifydata) AS cat_data
 GROUP BY valence, music_key
 ORDER BY valence, music_key;
 
-/* Calculate the average popularity for the artists. Which artists are the most popular? */
+# Calculate the average popularity for the artists. Which artists are the most popular? 
 
 WITH tempTable AS (
     SELECT
