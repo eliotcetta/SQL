@@ -1,6 +1,6 @@
-/* This analysis was conducted using an existing dataset containing 11 tables obtained from a digital media store; */
+# This analysis was conducted using an existing dataset containing 11 tables obtained from a digital media store;
 
-/* Find a distinct list of billing countries. How many customers are from each country? */
+# Find a distinct list of billing countries. How many customers are from each country?
 
 SELECT country,
 COUNT(distinct CustomerId) as 
@@ -8,7 +8,7 @@ customers_per_country
 FROM chinook.customers
 GROUP BY country;
 
-/* Who are the top 10 customers with the highest total invoice amounts? */
+# Who are the top 10 customers with the highest total invoice amounts? 
 
 WITH purchaseTable AS (
 Select InvoiceId,
@@ -27,13 +27,13 @@ GROUP BY c.CustomerId
 ORDER BY total_purchase DESC
 LIMIT 10;
 
-/* What is the average total purchase amount per customer? */
+# What is the average total purchase amount per customer?
 
 Select
 ROUND(AVG(Total),1) AS avg_purchase
 FROM chinook.invoices;
 
-/* How many customers are assigned to each support representative and how active are those customers in terms of purchasing? */
+# How many customers are assigned to each support representative and how active are those customers in terms of purchasing? 
 
 SELECT e.EmployeeId,
 e.FirstName,
@@ -47,7 +47,7 @@ LEFT JOIN chinook.invoices i
 ON i.CustomerId=c.CustomerId
 GROUP BY e.EmployeeId;
 
-/* What is the total revenue generated from invoices per country? */
+# What is the total revenue generated from invoices per country? 
 
 WITH revenueTable AS (
 SELECT
@@ -64,7 +64,7 @@ FROM revenueTable
 GROUP BY BillingCountry
 ORDER BY total_revenue DESC;
 
-/* How much revenue did each track generate in total? */
+# How much revenue did each track generate in total? 
 
 WITH revenueTable AS (
 SELECT
@@ -81,12 +81,12 @@ FROM revenueTable
 GROUP BY Name
 ORDER BY total_revenue DESC;
 
-/* What is the overall average invoice total? */
+# What is the overall average invoice total? 
 
 SELECT ROUND(AVG(Total),2) AS avg_invoice_total
 FROM chinook.invoices;
 
-/* What is the distribution of invoice totals? */
+# What is the distribution of invoice totals? 
 
 SELECT
 COUNT(InvoiceId) AS total_invoices,
@@ -102,7 +102,7 @@ FROM chinook.invoices
 GROUP BY total_amt_range
 ORDER BY total_invoices ASC;
 
-/* How many albums are there in each genre? */
+# How many albums are there in each genre? 
 
 SELECT COUNT(t.AlbumId) AS num_albums,
 g.Name
@@ -112,7 +112,7 @@ ON t.GenreId=g.GenreId
 GROUP BY g.Name
 ORDER BY num_albums DESC;
 
-/* Which albums have the most purchases and who are the artists? */
+# Which albums have the most purchases and who are the artists? 
 
 SELECT ar.Name AS artist,
 a.Title AS album,
@@ -130,7 +130,7 @@ GROUP BY artist
 ORDER BY num_purchases DESC
 LIMIT 10;
 
-/* Who are the top-selling artists by total revenue? */
+# Who are the top-selling artists by total revenue?
 
 WITH artistRevenue AS (
 SELECT
@@ -153,7 +153,7 @@ GROUP BY Name
 ORDER BY total_revenue DESC
 LIMIT 10;
 
-/* What is the average number of tracks in each playlist? */
+# What is the average number of tracks in each playlist? 
 
 WITH playlistCTE AS (
 SELECT
@@ -170,7 +170,7 @@ SELECT
 ROUND(AVG(total_tracks),2) AS avg_num_tracks
 FROM playlistCTE;
 
-/* Which track belongs to the most playlists? */
+# Which track belongs to the most playlists?
 
 WITH trackCTE AS (
 SELECT
@@ -186,7 +186,7 @@ trackCTE.Name AS song_name,
 MAX(num_playlists) AS playlist_appear
 FROM trackCTE;
 
-/* How many tracks are associated with each genre? */
+# How many tracks are associated with each genre? 
 
 SELECT g.name,
 COUNT(t.Trackid) AS num_songs
@@ -196,7 +196,7 @@ ON t.genreid=g.genreid
 GROUP BY g.name
 ORDER BY num_songs DESC;
 
-/* What are the top-selling tracks by quantity? */
+# What are the top-selling tracks by quantity? 
 
 SELECT t.Name, 
 COUNT(ii.InvoiceId) AS num_sales
@@ -207,7 +207,7 @@ GROUP BY t.Name
 ORDER BY num_sales DESC
 LIMIT 5;
 
-/* How many invoices were issued to customers in each state? */
+# How many invoices were issued to customers in each state? 
 
 SELECT BillingState AS state,
 COUNT(InvoiceId) AS num_invoices
@@ -217,7 +217,7 @@ length(state) = 2
 GROUP BY state
 ORDER BY num_invoices DESC;
 
-/* Which composers have the most tracks? */
+# Which composers have the most tracks? 
 
 SELECT Composer,
 COUNT(TrackId) AS num_tracks
@@ -227,7 +227,7 @@ GROUP BY Composer
 ORDER BY num_tracks DESC
 LIMIT 15;
 
-/* Who are the most purchased artists? */
+# Who are the most purchased artists? 
 
 SELECT ar.Name,
 COUNT(t.Name) AS num_purchase
